@@ -1,0 +1,23 @@
+This script allows you to monitor your favorite livestreams
+and easily select through the currently live ones.
+
+It uses livestreamer as the backend for playing and checking streams,
+and dmenu for the selection menu. It supports any streams that
+livestreamer can play.
+
+Usage: bashstreams.sh [commands...]
+
+Commands available:
+reload - reload the list of streams currently live (stored in ~/.live)
+dmenu - Run dmenu with a list of currently live streams
+stream - Run a stream by name
+
+You can also do "bashstreams.sh reload dmenu" to check for livestreams and
+then immediately run dmenu. However if you have a large amount of streams in
+your config file this may be slow.
+
+Configuration file is in ~/.streams . Each line in the file is a stream
+to track. The format is <stream url> <stream alias>
+
+This script requires livestreamer ( https://github.com/chrippa/livestreamer ),
+jshon, and dmenu.
