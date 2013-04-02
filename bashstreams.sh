@@ -4,6 +4,9 @@
 # Files should be stored in format: <stream url> <stream name>
 # Supported streams are anything that works in livestreamer
 
+config="~/.streams"
+livelist="~/.live"
+
 playstream() {
 	# Loop through the configuration file to find the url that
 	# corresponds to the alias
@@ -11,7 +14,7 @@ playstream() {
 		if [ $(cut -d ' ' -f 2- <<< $streamurl) == "$1" ]; then
 			livestreamer $(cut -d ' ' -f 1 <<< $streamurl) best
 		fi
-	done < ~/.streams
+	done < "$config"
 }
 
 tostream=false
@@ -30,7 +33,7 @@ do
 				# If it's streaming, get the stream alias from the file and echo it to the live file
 				echo $(cut -d ' ' -f 2- <<< $streamurl)
 			fi
-		done < ~/.streams > ~/.live
+		done < "$config" > ~/.live
 	elif [ "$arg" == "dmenu" ]; then
 		playstream $(dmenu -p "Stream" < ~/.live)
 	elif [ "$arg" == "stream" ]; then
@@ -39,7 +42,7 @@ do
 		echo "Usage: $(basename $0) [commands...]
 
 Commands available:
-reload - reload the list of streams currently live (stored in ~/.live)
+reload - reload the list of streams currently live (stored in $livelist)
 dmenu - Run dmenu with a list of currently live streams
 stream - Run a stream by name
 
@@ -47,7 +50,7 @@ You can also do \"$(basename $0) reload dmenu\" to check for livestreams and
 then immediately run dmenu. However if you have a large amount of streams in
 your config file this may be slow.
 
-Configuration file is in ~/.streams . Each line in the file is a stream
+Configuration file is in ${config}. Each line in the file is a stream
 to track. The format is <stream url> <stream alias>
 
 This script requires livestreamer ( https://github.com/chrippa/livestreamer ),
