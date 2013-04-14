@@ -4,8 +4,8 @@
 # Files should be stored in format: <stream url> <stream name>
 # Supported streams are anything that works in livestreamer
 
-config="~/.streams"
-livelist="~/.live"
+config="$HOME/.streams"
+livelist="$HOME/.live"
 
 playstream() {
 	# Loop through the configuration file to find the url that
