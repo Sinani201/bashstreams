@@ -28,8 +28,9 @@ do
 		# Loop through each line in the config file
 		while read streamurl; do
 			# Use livestreamer -j to output information about the stream in json format.
-			# Then use json to see if the "live" parameter is true.
-			if [ $(livestreamer -j $(cut -d ' ' -f 1 <<< $streamurl) best | jshon -e params -e live) == "true" ]; then
+			# Then use json to see if there was an error. If there was, that means there
+			# is no stream.
+			if ! livestreamer -j $(cut -d ' ' -f 1 <<< $streamurl) best | jshon -Qe error > /dev/null ; then
 				# If it's streaming, get the stream alias from the file and echo it to the live file
 				echo $(cut -d ' ' -f 2- <<< $streamurl)
 			fi
